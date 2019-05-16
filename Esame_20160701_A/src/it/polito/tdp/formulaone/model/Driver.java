@@ -26,6 +26,12 @@ public class Driver {
 		this.nationality = nationality;
 		this.url = url;
 	}
+	
+	public Driver(int driverId) {
+		super();
+		this.driverId = driverId;
+	}
+
 	public int getDriverId() {
 		return driverId;
 	}
