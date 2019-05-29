@@ -23,36 +23,27 @@ public class Model {
 	public String risultatiPilota(Integer year) {
 		Driver migliorPilota = null;
 		String risultato="";
-		int best = Integer.MIN_VALUE;
-		int worst = Integer.MAX_VALUE;
+		double max=0;
 		grafo = new DefaultDirectedWeightedGraph<>(DefaultWeightedEdge.class);
 		FormulaOneDAO dao = new FormulaOneDAO();
 		dao.popolaGrafo(grafo, year);
 		for(DefaultWeightedEdge e: grafo.edgeSet()) {
 			System.out.println(grafo.getEdgeWeight(e)+"\n");
 		}
-
-		
-//		for(Driver d: grafo.vertexSet()) {
-//			int risultatoPilota=0;
-//			for(DefaultWeightedEdge edge: grafo.outgoingEdgesOf(d)) {
-//				risultatoPilota+=grafo.getEdgeWeight(edge);
-//			}
-//			for(DefaultWeightedEdge edge: grafo.incomingEdgesOf(d)) {
-//				risultatoPilota-=grafo.getEdgeWeight(edge);
-//			}
-//			if(risultatoPilota>best || migliorPilota==null) {
-//				migliorPilota = d;
-//				best=risultatoPilota;
-//				risultato+="Il miglior pilota è: "+d.getDriverId()+" con un risultato di: "+risultatoPilota+"\n";
-//			}
-//			else if(risultatoPilota<worst || migliorPilota==null) {
-//				migliorPilota = d;
-//				worst=risultatoPilota;
-//				risultato+="Il miglior pilota è: "+d.getDriverId()+" con un risultato di: "+risultatoPilota+"\n";
-//			}
-//		}
-		
+		for(Driver d: grafo.vertexSet()) {
+			double risultatoPilota=0;
+			for(DefaultWeightedEdge edge: grafo.outgoingEdgesOf(d)) {
+				risultatoPilota+=grafo.getEdgeWeight(edge);
+			}
+			for(DefaultWeightedEdge edge: grafo.incomingEdgesOf(d)) {
+				risultatoPilota-=grafo.getEdgeWeight(edge);
+			}
+			if(risultatoPilota>max) {
+				max=risultatoPilota;
+				migliorPilota=d;
+				risultato="Il miglior pilota nell'anno selezionato e: "+d.getDriverId()+" con un risultato di: "+max;
+			}
+		}
 		return risultato;
 	}
 	
