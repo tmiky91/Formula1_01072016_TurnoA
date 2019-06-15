@@ -145,8 +145,8 @@ public class FormulaOneDAO {
 							"and r.raceId=r2.raceId " + 
 							"and r1.driverId != r2.driverId " + 
 							"and r1.position < r2.position " + 
-							"and r1.position != \"NULL\" " + 
-							"and r2.position != \"NULL\" " + 
+							"and r1.position is not null " + 
+							"and r2.position is not null " + 
 							"and r.year=? " + 
 							"group by r1.driverId, r2.driverId";
 		
@@ -168,7 +168,7 @@ public class FormulaOneDAO {
 				if(!grafo.containsVertex(d2)) {
 					grafo.addVertex(d2);
 				}
-				if(!grafo.containsEdge(d1, d2)){
+				if(!grafo.containsEdge(d1, d2) && !grafo.containsEdge(d2, d1)){
 					DefaultWeightedEdge arco = grafo.addEdge(d1, d2);
 					grafo.setEdgeWeight(arco, peso);
 				}
